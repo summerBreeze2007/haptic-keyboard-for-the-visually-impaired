@@ -92,7 +92,11 @@ class KeyboardViewController: UIInputViewController {
             rowStack.distribution = .fill
             rowStack.alignment = .center
             rowStack.spacing = isFirstRow || isLastRow ? 6 : 7
-            rowStack.layoutMargins = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
+            if rowIndex == 2 {
+                rowStack.layoutMargins = UIEdgeInsets(top: 0, left: 0, bottom: 0, right: 0)
+            } else {
+                rowStack.layoutMargins = UIEdgeInsets(top: 0, left: 3, bottom: 0, right: 3)
+            }
             rowStack.isLayoutMarginsRelativeArrangement = true
             rowStack.translatesAutoresizingMaskIntoConstraints = false
             rowStack.setContentHuggingPriority(.required, for: .horizontal)
@@ -101,9 +105,17 @@ class KeyboardViewController: UIInputViewController {
             for (index, key) in row.enumerated() {
                 let button = UIButton(type: .system)
                 button.setTitle(key, for: .normal)
+                
+
+                
                 button.titleLabel?.font = UIFont.systemFont(ofSize: 22)
                 
                 button.backgroundColor = UIColor(white: 1.0, alpha: 0.95)
+                
+                if key == "⇧" || key == "⌫" {
+                    button.backgroundColor = UIColor.systemBlue.withAlphaComponent(0.5)
+                }
+                
                 button.setTitleColor(.black, for: .normal)
                 button.layer.cornerRadius = 6
                 button.layer.borderColor = UIColor.systemGray4.cgColor
@@ -114,7 +126,11 @@ class KeyboardViewController: UIInputViewController {
                 button.layer.shadowRadius = 1
                 button.layer.masksToBounds = false
                 
-                if isLastRow {
+                if key == "⇧" {
+                    button.widthAnchor.constraint(equalToConstant: 31).isActive = true
+                } else if key == "⌫" {
+                    button.widthAnchor.constraint(equalToConstant: 49).isActive = true
+                }else if isLastRow {
                     switch key {
                     case "띄어쓰기":
                         button.widthAnchor.constraint(equalToConstant: 270).isActive = true
@@ -125,7 +141,9 @@ class KeyboardViewController: UIInputViewController {
                     }
                 } else if isFirstRow {
                     button.widthAnchor.constraint(equalToConstant: 32).isActive = true
-                } else {
+                } else if rowIndex == 1 {
+                    button.widthAnchor.constraint(equalToConstant: 34).isActive = true
+                }else {
                     button.widthAnchor.constraint(equalToConstant: 33).isActive = true
                 }
                 
@@ -148,12 +166,19 @@ class KeyboardViewController: UIInputViewController {
             rowContainer.translatesAutoresizingMaskIntoConstraints = false
             rowContainer.addSubview(rowStack)
             
-            NSLayoutConstraint.activate([
-                rowStack.centerXAnchor.constraint(equalTo: rowContainer.centerXAnchor),
+            var constraints: [NSLayoutConstraint] = [
                 rowStack.topAnchor.constraint(equalTo: rowContainer.topAnchor),
                 rowStack.bottomAnchor.constraint(equalTo: rowContainer.bottomAnchor),
                 rowContainer.heightAnchor.constraint(equalToConstant: rowHeight)
-            ])
+            ]
+
+            if rowIndex == 2 {
+                constraints.append(rowStack.leadingAnchor.constraint(equalTo: rowContainer.leadingAnchor, constant: 0))
+            } else {
+                constraints.append(rowStack.centerXAnchor.constraint(equalTo: rowContainer.centerXAnchor))
+            }
+
+            NSLayoutConstraint.activate(constraints)
             
             keyboardStack.addArrangedSubview(rowContainer)
         }
