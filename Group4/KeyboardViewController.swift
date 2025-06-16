@@ -133,9 +133,9 @@ class KeyboardViewController: UIInputViewController {
                 }else if isLastRow {
                     switch key {
                     case "띄어쓰기":
-                        button.widthAnchor.constraint(equalToConstant: 270).isActive = true
+                        button.widthAnchor.constraint(equalToConstant: 275).isActive = true
                     case "⏎":
-                        button.widthAnchor.constraint(equalToConstant: 50).isActive = true
+                        button.widthAnchor.constraint(equalToConstant: 45).isActive = true
                     default:
                         button.widthAnchor.constraint(equalToConstant: 40).isActive = true
                     }
