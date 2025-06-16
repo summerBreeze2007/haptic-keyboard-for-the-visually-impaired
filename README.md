@@ -17,11 +17,14 @@ Below, I will guide you through the installments.
 ### Setup & Running Instructions
 
 1. **Clone the repository**
-   ```$
-   git clone https://github.com/summerBreeze2007/haptic-keyboard-for-the-visually-impaired.git```
+   ```bash
+   git clone https://github.com/summerBreeze2007/haptic-keyboard-for-the-visually-impaired.git
+   ```
    
 2. **Open the project**
-   ```open Group4.xcodeproj```
+   ```bash 
+   open Group4.xcodeproj
+   ```
    or just double-click on the Group4.xcodeproj file.
    
 3. **Set your iphone as the target device**
